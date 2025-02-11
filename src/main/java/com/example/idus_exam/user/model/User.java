@@ -1,10 +1,7 @@
 package com.example.idus_exam.user.model;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.idus_exam.orders.model.Orders;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +28,9 @@ public class User implements UserDetails {
     private String phone;
     private String email;
     private String gender;
+
+    @OneToMany(mappedBy = "user")
+    private List<Orders> orderList = new ArrayList<>();
 
 
     @Override
