@@ -55,18 +55,40 @@ public class UserService implements UserDetailsService {
     public UserDto.UserPageResponse list(int page, int size) {
         Page<User> result = userRepository.findAll(PageRequest.of(page, size));
 
-        if(result.hasContent()) {
-            for(User user : result.getContent()) {
-                List<Orders> ordersList = new ArrayList<>();
-                List<OrdersDto.OrdersResponse> ordersResList = ordersService.readByUser(user.getIdx());
-
-                for(OrdersDto.OrdersResponse ordersRes: ordersResList) {
-                    Orders orders = ordersRes.toEntity();
-                    ordersList.add(orders);
-                }
-                user.updateOrderList(ordersList);
-            }
+        if (result.hasContent()) {
+            updateOrdersToUser(result);
         }
         return UserDto.UserPageResponse.from(result);
+    }
+
+    public UserDto.UserPageResponse searchByName(int page, int size, String name) {
+        Page<User> result = userRepository.findAllByNameContains(PageRequest.of(page, size), name);
+
+        if (result.hasContent()) {
+            updateOrdersToUser(result);
+        }
+        return UserDto.UserPageResponse.from(result);
+    }
+
+    public UserDto.UserPageResponse searchByEmail(int page, int size, String email) {
+        Page<User> result = userRepository.findAllByEmailContains(PageRequest.of(page, size), email);
+
+        if (result.hasContent()) {
+            updateOrdersToUser(result);
+        }
+        return UserDto.UserPageResponse.from(result);
+    }
+
+    public void updateOrdersToUser(Page<User> result) {
+        for (User user : result.getContent()) {
+            List<Orders> ordersList = new ArrayList<>();
+            List<OrdersDto.OrdersResponse> ordersResList = ordersService.readByUser(user.getIdx());
+
+            for (OrdersDto.OrdersResponse ordersRes : ordersResList) {
+                Orders orders = ordersRes.toEntity();
+                ordersList.add(orders);
+            }
+            user.updateOrderList(ordersList);
+        }
     }
 }
