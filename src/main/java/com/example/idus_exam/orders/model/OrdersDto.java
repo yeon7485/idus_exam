@@ -48,6 +48,16 @@ public class OrdersDto {
                     .date(orders.getDate())
                     .build();
         }
+
+        public Orders toEntity() {
+            return Orders.builder()
+                    .idx(idx)
+                    .orderId(orderId)
+                    .name(name)
+                    .date(date)
+                    .build();
+        }
+
     }
 
 }
