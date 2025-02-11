@@ -19,6 +19,7 @@ public class Orders {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idx;
+    private String orderId;
     private String name;
     @CreationTimestamp
     @Column(name = "date")
