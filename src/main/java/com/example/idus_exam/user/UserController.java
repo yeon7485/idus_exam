@@ -34,4 +34,12 @@ public class UserController {
 
         return ResponseEntity.ok("Logout successful");
     }
+
+    @Operation(summary = "단일 회원 상세 정보 조회", description = "단일 회원의 상세 정보 조회 기능입니다.")
+    @GetMapping("/{userIdx}")
+    public ResponseEntity<UserDto.UserResponse> getUser(@PathVariable Long userIdx) {
+        UserDto.UserResponse response = userService.read(userIdx);
+
+        return ResponseEntity.ok(response);
+    }
 }
