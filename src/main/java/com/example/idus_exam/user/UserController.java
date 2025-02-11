@@ -2,6 +2,8 @@ package com.example.idus_exam.user;
 
 import com.example.idus_exam.user.model.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,5 +19,19 @@ public class UserController {
     public ResponseEntity<String> signup(@RequestBody UserDto.SignupRequest dto) {
         userService.signup(dto);
         return ResponseEntity.ok("Signup successful");
+    }
+
+    @Operation(summary = "로그아웃", description = "로그아웃 기능입니다.")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("ATOKEN", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok("Logout successful");
     }
 }
