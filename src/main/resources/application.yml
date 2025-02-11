@@ -1,18 +1,4 @@
 spring:
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_ADDR}
-    password: ${MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          starttls:
-            enable: true
-            required: true
-          auth: true
-          timeout: 5000
-
   datasource:
     master:
       jdbc-url: ${MASTER_DB_URL}
