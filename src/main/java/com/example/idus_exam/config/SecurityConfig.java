@@ -37,7 +37,7 @@ public class SecurityConfig {
                 (auth) -> auth
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/login", "/user/signup").permitAll()
+                        .requestMatchers("/login", "/logout", "/user/signup", "user/{userIdx}").permitAll()
                         .anyRequest().authenticated()
         );
 
@@ -46,6 +46,7 @@ public class SecurityConfig {
 
         http.addFilterAt(new LoginFilter(configuration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }

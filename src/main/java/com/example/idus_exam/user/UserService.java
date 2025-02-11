@@ -36,4 +36,10 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
+
+    @Transactional(readOnly = true)
+    public UserDto.UserResponse read(Long userIdx) {
+        User user = userRepository.findById(userIdx).orElseThrow();
+        return UserDto.UserResponse.from(user);
+    }
 }
