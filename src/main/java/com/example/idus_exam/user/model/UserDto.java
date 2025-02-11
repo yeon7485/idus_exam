@@ -29,6 +29,13 @@ public class UserDto {
                     .gender(gender)
                     .build();
         }
+    }
 
+    @Getter
+    public static class LoginRequest {
+        @Schema(description = "이메일", example = "gildong@example.com")
+        private String email;
+        @Schema(description = "비밀번호", example = "password123")
+        private String password;
     }
 }
