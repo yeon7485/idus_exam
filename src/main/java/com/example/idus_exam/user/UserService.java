@@ -61,6 +61,7 @@ public class UserService implements UserDetailsService {
         return UserDto.UserPageResponse.from(result);
     }
 
+    @Transactional(readOnly = true)
     public UserDto.UserPageResponse searchByName(int page, int size, String name) {
         Page<User> result = userRepository.findAllByNameContains(PageRequest.of(page, size), name);
 
@@ -70,6 +71,7 @@ public class UserService implements UserDetailsService {
         return UserDto.UserPageResponse.from(result);
     }
 
+    @Transactional(readOnly = true)
     public UserDto.UserPageResponse searchByEmail(int page, int size, String email) {
         Page<User> result = userRepository.findAllByEmailContains(PageRequest.of(page, size), email);
 
